@@ -1,0 +1,72 @@
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+#nav {
+    text-align: center;
+    display: inline-block;
+}
+
+#nav a {
+    background-color: #ddd;
+    color: black;
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    font-weight: bold;
+}
+
+#nav a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    text-align: center;
+}
+
+.header {
+    padding: 50px;
+    background: #616161;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+table {
+    width: 75%;
+    color: #000000;
+    font-size: 25px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+tr:nth-child(odd) {
+    background-color: #dddddd;
+}
+
+th {
+    background-color: #545454;
+    color: white;
+}
+
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+
+.period {
+    text-align: center;
+}
