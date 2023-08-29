@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return redirect('/home', code=303)
+    return redirect('/home')
 
 @app.route('/home')
 def home():
@@ -22,6 +22,12 @@ def schedule():
 @app.route('/biosite/favorites')
 def links():
     return send_from_directory(app.static_folder, path='biosite/html/favorites.html')
+
+@app.route('/cringyss')
+def cringe():
+    return send_from_directory(app.static_folder, path='cringyss/cringe.html')
+
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
