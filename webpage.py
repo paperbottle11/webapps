@@ -4,11 +4,11 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-    return redirect('/home', code=301)
+    return redirect('/home', code=303)
 
 @app.route('/home')
 def home():
-    return send_from_directory(app.static_folder, path='index.html')
+    return send_from_directory(app.static_folder, path='home/index.html')
 
 @app.route('/biosite/bio')
 def bio():

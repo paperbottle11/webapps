@@ -1,10 +1,16 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: "Roboto", sans-serif;
 }
 
 #nav {
     text-align: center;
-    display: inline-block;
+    display: block;
+    float: right;
 }
 
 #nav a {
@@ -69,4 +75,22 @@ table, th, td {
 
 .period {
     text-align: center;
+}
+
+#home {
+    display: block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+    font-weight: bold;
+    background-color: #ddd;
+    color: black;
+    float: left;
+}
+
+#home:hover {
+    background-color: #555;
+    color: white;
 }
