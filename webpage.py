@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, redirect
+from flask import Flask, send_from_directory, redirect, request
 
 app = Flask(__name__)
 
@@ -27,7 +27,26 @@ def links():
 def cringe():
     return send_from_directory(app.static_folder, path='cringyss/cringe.html')
 
-
+# Query Demo
+@app.route('/gettest', methods=['GET'])
+def gettest():
+    if request.method == 'GET' and "color" in request.args:
+        website=f"""
+                <html>
+                <style>
+                body {{
+                    background: {request.args.get("color")};
+                }}
+                </style>
+                <body>
+                {request.args.get("q")}
+                </body>
+                </html>
+        """
+        return website
+    else: return "No Got..."
+    
+        
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
