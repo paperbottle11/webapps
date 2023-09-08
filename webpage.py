@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, redirect, request
+from flask import Flask, send_from_directory, redirect, request, render_template
 
 app = Flask(__name__)
 
@@ -45,8 +45,15 @@ def gettest():
         """
         return website
     else: return "No Got..."
-    
-        
+
+# Template Demo
+@app.route('/penguins', methods=['GET'])
+def penguins():
+    count = 3
+    if request.method == 'GET' and 'count' in request.args:
+        try: count = int(request.args.get("count"))
+        except: pass
+    return render_template('penguins.html', count=count)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)

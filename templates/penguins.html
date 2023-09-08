@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Too Many Penguins</title>
+    <meta charset="utf-8">
+    <style>
+        img {
+            width: 50px;
+            display: inline-block;
+        }
+        div {
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    {% for i in range(count) %}
+        <div><img src="static/penguins/penguin.png" alt="penguin"></div>
+    {% endfor %}
+    <a href="/penguins?count={{ count + 1 }}">MOAR PENG</a>
+    <a href="/penguins?count={{ [1, count - 1]|max }}">less peng</a>
+</body>
+</html>
