@@ -1,0 +1,155 @@
+html{
+    background-image: url("/static/coolss/background.svg");
+    background-size: 250%;
+    background-position: 10% 0%;
+    font-family: "Josefin Sans", sans-serif;
+}
+.intro{
+    background-color: rgba(0, 0, 0, 0.85);
+    position: absolute;
+    display: flex;
+    align-items: last baseline;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    opacity: 0.8;
+    color: rgb(234, 234, 234);
+}
+.intro h2, .intro h3{
+    color: rgb(236, 236, 236);
+}
+.intro a{
+    color: rgb(122, 133, 255);
+}
+header h1{
+    font-size: 50pt;
+    color: rgb(255, 255, 255);
+    margin-bottom: 20px;
+}
+.explanation{
+    position: absolute;
+    top: 30%;
+    left: 0;
+    width: 50%;
+    height: 200px;
+    background-color:rgb(0, 157, 255);
+    clip-path: polygon(0 0, 25% 100%, 100% 25%);
+    word-break: break-word;
+    padding-top: 100px;
+    padding-right: 350px;
+    padding-left: 200px;
+    padding-bottom: 250px;
+}
+.participation{
+    position: absolute;
+    top: 57%;
+    right: 0;
+    width: 55%;
+    height: 200px;
+    background-color:rgb(0, 115, 255);
+    clip-path: polygon(100% 0%, 92% 100%, 7.2% 49.7%, 51.7% 5%);
+    word-break: break-word;
+    text-align: right;
+    padding-top: 150px;
+    padding-right: 100px;
+    padding-left: 500px;
+    padding-bottom: 250px;
+}
+.benefits{
+    position: absolute;
+    top: 88.8%;
+    left: 19.6%;
+    width: 64%;
+    height: 200px;
+    background-color:rgb(130, 47, 255);
+    color: white;
+    clip-path: polygon(0% 0%, 10% 55%, 90% 70%, 98.5% 43.3%);
+    word-break: break-word;
+    padding-top: 250px;
+    padding-left: 200px;
+    padding-bottom: 250px;
+}
+.requirements{
+    position: absolute;
+    top: 130%;
+    left: 0;
+    width: 50%;
+    height: 200px;
+    background-color:rgb(255, 0, 183);
+    clip-path: polygon(0 25%, 10% 100%, 75% 90%, 100% 16.8%, 34.3% 0%);
+    word-break: break-word;
+    color: white;
+    padding-top: 100px;
+    padding-right: 350px;
+    padding-left: 200px;
+    padding-bottom: 250px;
+}
+.requirements a{
+    color: rgb(251, 139, 245);
+}
+footer {
+    clear: both;
+    color: #fff;
+    background: #ff5e00;
+    text-align: center;
+    position: absolute;
+    top: 230%;
+    left: 0%;
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+footer a {
+    display: inline-block;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    padding: 20px 0 0 0;
+    margin: 0 0.5em;
+    position: relative;
+    color: rgb(0, 0, 0);
+}
+.sidebar {
+    clear: both;
+    color: #000000;
+    background: #ff005d;
+    text-align: center;
+    position: absolute;
+    top: 182%;
+    left: 0%;
+    width: 100%;
+    height: auto;
+}
+ul{
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+}
+li {
+    display: flex;
+    background-color: #555555;
+    border-radius: 10px;
+    border-style: solid;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    list-style-type: none;
+    width: 20%;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px;
+}
+li a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+}
+li a:hover{
+    background-color: rgb(0, 0, 0);
+}

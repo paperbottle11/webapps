@@ -27,6 +27,10 @@ def links():
 def cringe():
     return send_from_directory(app.static_folder, path='cringyss/cringe.html')
 
+@app.route('/coolss')
+def cool():
+    return send_from_directory(app.static_folder, path='coolss/index.html')
+
 # Query Demo
 @app.route('/gettest', methods=['GET'])
 def gettest():
