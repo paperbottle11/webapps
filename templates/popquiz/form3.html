@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pop Quiz</title>
+        <link rel="stylesheet" type="text/css" href="static/popquiz/style.css">
+    </head>
+    <body>
+        <form id="quiz">
+            <p>Which flavor of ice cream would you try?</p>
+            <p><input type="radio" name="icecream" value="pickle">Pickle</p>
+            <p><input type="radio" name="icecream" value="buffalosauce">Buffalo Sauce</p>
+            <p><input type="radio" name="icecream" value="mayo">Mayo</p>
+            <input type="submit">
+            <input type="hidden" name="quiz" value="3">
+        </form>
+        <script>
+            const form = document.getElementById('quiz');
+            form.addEventListener('keypress', function(e) {
+              if (e.keyCode === 13) {
+                e.preventDefault();
+              }
+            });
+          </script>
+    </body>
+</html>
