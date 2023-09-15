@@ -54,11 +54,19 @@ h1 {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
+    font-size: 16pt;
 }
 
 .logo {
     display: inline-block;
     width: 500px;
+}
+.logos {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
 }
 
 figcaption {
