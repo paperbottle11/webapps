@@ -1,6 +1,6 @@
-from flask import Flask, send_from_directory, redirect, request, render_template
-
+from flask import Flask, send_from_directory, redirect, request, render_template, session
 app = Flask(__name__)
+app.secret_key = "super secret key"
 
 @app.route('/', methods=['GET'])
 def index():
@@ -13,7 +13,6 @@ def home():
 @app.route('/biosite/bio')
 def bio():
     return send_from_directory(app.static_folder, path='biosite/html/bio.html')
-    # return open("static/html/bio.html").read()
 
 @app.route('/biosite/schedule')
 def schedule():
@@ -31,33 +30,33 @@ def cringe():
 def cool():
     return send_from_directory(app.static_folder, path='coolss/index.html')
 
-# Query Demo
-@app.route('/gettest', methods=['GET'])
-def gettest():
-    if request.method == 'GET' and "color" in request.args:
-        website=f"""
-                <html>
-                <style>
-                body {{
-                    background: {request.args.get("color")};
-                }}
-                </style>
-                <body>
-                {request.args.get("q")}
-                </body>
-                </html>
-        """
-        return website
-    else: return "No Got..."
+def quiz_results(bread, animal, icecream):
+    breadIdx = ["white", "sourdough", "wholegrain", "french"].index(bread)
+    animalIdx = ["wolf", "giraffe", "flyingsquirrel", "portabellamushroom"].index(animal)
+    # icecreamIdx = ["pickle", "buffalosauce", "mayo"].index(icecream)
+    result = [["speedster", "truck", "limittest", "dui"],
+              ["speedster", "truck", "limittest", "dui"],
+              ["demon", "beetledriver", "demon", "beetledriver"],
+              ["speedster", "beetledriver", "limittest", "beetledriver"]]
+    return result[breadIdx][animalIdx]
 
-# Template Demo
-@app.route('/penguins', methods=['GET'])
-def penguins():
-    count = 3
-    if request.method == 'GET' and 'count' in request.args:
-        try: count = int(request.args.get("count"))
-        except: pass
-    return render_template('penguins.html', count=count)
+@app.route('/popquiz')
+def popquiz():
+    if request.method == 'GET':
+        if "quiz" in request.args:
+            num = int(request.args["quiz"])
+            if num == 1:
+                session["name"] = request.args["name"]
+                session["bread"] = request.args["bread"]
+            elif num == 2:
+                session["animal"] = request.args["animal"]
+            elif num == 3:
+                session["icecream"] = request.args["icecream"]           
+                result = quiz_results(session["bread"], session["animal"], session["icecream"])
+                return render_template('popquiz/results.html', name=session["name"], bread=session["bread"], animal=session["animal"], icecream=session["icecream"], result=result)
+
+            return render_template(f'popquiz/form{num+1}.html')
+    return render_template('popquiz/form1.html')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)

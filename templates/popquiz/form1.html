@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pop Quiz</title>
+        <link rel="stylesheet" type="text/css" href="static/popquiz/style.css">
+    </head>
+    <body>
+      <h1>What kind of driver are you?</h1>  
+      
+      <form id="quiz">
+            <p>Name:</p>
+            <input type="text" name="name">
+
+            <p>What is your favorite type of bread?</p>
+            <p><input type="radio" name="bread" value="white">White</p>
+            <p><input type="radio" name="bread" value="sourdough">Sourdough</p>
+            <p><input type="radio" name="bread" value="wholegrain">Whole Grain</p>
+            <p><input type="radio" name="bread" value="french">French</p>
+            <input type="submit">
+            <input type="hidden" name="quiz" value="1">
+        </form>
+        <script>
+            const form = document.getElementById('quiz');
+            form.addEventListener('keypress', function(e) {
+              if (e.keyCode === 13) {
+                e.preventDefault();
+              }
+            });
+          </script>
+    </body>
+</html>
