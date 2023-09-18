@@ -16,17 +16,19 @@ header, h1 {
 }
 
 .nav {
-    margin: auto;
-    display: flex;
-    justify-content: center;
-    width: 50%;
+    margin-left: 50px;
+    margin-right: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-auto-flow: dense;
+    width: 100%;
     gap: 50px;
 }
 
 .container {
     position: relative;
     display: inline-block;
-    width: 50%;
+    width: 100%;
 }
 
 .image {

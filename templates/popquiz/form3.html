@@ -2,16 +2,18 @@
 <html>
     <head>
         <title>Pop Quiz</title>
-        <link rel="stylesheet" type="text/css" href="static/popquiz/style.css">
+        <link rel="stylesheet" type="text/css" href="static/popquiz/form.css">
     </head>
     <body>
-        <form id="quiz">
-            <p>Which flavor of ice cream would you try?</p>
-            <p><input type="radio" name="icecream" value="pickle">Pickle</p>
-            <p><input type="radio" name="icecream" value="buffalosauce">Buffalo Sauce</p>
-            <p><input type="radio" name="icecream" value="mayo">Mayo</p>
-            <input type="submit">
-            <input type="hidden" name="quiz" value="3">
+        <form class="form">
+            <div class="question multi">
+                <p>Which flavor of ice cream would you buy?</p>
+                <p><input type="radio" name="icecream" value="pickle">Pickle</p>
+                <p><input type="radio" name="icecream" value="buffalosauce">Buffalo Sauce</p>
+                <p><input type="radio" name="icecream" value="mayo">Mayo</p>
+                <input type="hidden" name="quiz" value="3">
+            </div>
+            <input type="submit" class="submit">
         </form>
         <script>
             const form = document.getElementById('quiz');

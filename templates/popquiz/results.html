@@ -2,25 +2,33 @@
 <html>
     <head>
         <title>Pop Quiz</title>
-        <link rel="stylesheet" type="text/css" href="static/popquiz/style.css">
+        <link rel="stylesheet" type="text/css" href="static/popquiz/form.css">
     </head>
     <body>
-        <h1>Hi, {{name}}!</h1>
-        <h2>You are {% if result == "limittest" %} a tester of the limits. {% elif result == "speedster" %} a speedy speedster. {% elif result == "safe" %} a safe, examplary driver. {% elif result == "demon" %} a menace to the public streets. {% elif result == "dui" %} definitely getting a DUI soon, if not already. {% elif result == "beetledriver" %} such a hippie. {% else %} a truck owner. {% endif %}</h2>
-        <p>{% if result == "limittest" %}
-            You consistently drive at the speed limit, and never over. Whenever there are multiple lanes, sometimes you decide to be a goofy goober and drive REALLY close to the person next to you.  Please stop what you're doing.  You test the limits.
-           {% elif result == "speedster" %}
-            You are a safe driver, but you like to go fast. The fastest you've driven is 90mph because you were feeling intrepid, and you like to really press on the gas at green lights.  You camp in the left lane on highways because "those darn slowpokes" are in the right lane.  You are a speedster.
-           {% elif result == "safe" %}
-            You always drive at the speed limit, and you never go over. The right lane is your home, and you only get in the left lane if you need to turn left.  If you and another driver arrive at a stop sign at the same time, you always let the other driver go first.  So nice of you!  You're such a safe, kind driver.
-           {% elif result == "demon" %}
-            You consistently drive 30mph over the speed limit, and you like to tailgate and flash highbeams at people who decided today they are going to drive like a normal, sane person and they end up blocking your path.  You also like to cut people off, and you never use your turn signal.  You definitely drive an Altima or a BMW.
-           {% elif result == "dui" %}
-            Yeah you are always drinking or doing drugs or vaping.  A DUI is on the horizon for you, if you haven't gotten one already.  You addict...
-           {% elif result == "beetledriver" %}
-            You drive a Beetle, and you are a hippie.  If it's not a beetle, its a Volkwagen or Chevy van with an interior conversion.
-           {% else %}
-
-           {% endif %}</p>
+        <div class="title">
+            <h1>Wow, {{name}}...</h1>
+        </div>
+        <div class="form">
+            <div class="result">
+                <h1>You are {% if result == "limittest" %} a tester of the limits. {% elif result == "speedster" %} a speedy speedster. {% elif result == "safe" %} a safe, examplary driver. {% elif result == "demon" %} a menace to the public streets. {% elif result == "dui" %} definitely getting a DUI soon, if not already. {% elif result == "beetledriver" %} such a hippie. {% else %} a giant truck owner. {% endif %}</h1>
+                <p>{% if result == "limittest" %}
+                    You consistently drive at the speed limit, and never over. Whenever there are multiple lanes, sometimes you decide to be a goofy goober and drive REALLY close to the person next to you.  Please stop what you're doing.  You test the limits.
+                    {% elif result == "speedster" %}
+                    You are a safe driver, but you like to go fast. The fastest you've driven is 90mph because you were feeling intrepid, and you like to really press on the gas at green lights.  You camp in the left lane on highways because "those darn slowpokes" are in the right lane.  You are a speedster.
+                    {% elif result == "safe" %}
+                    You always drive at the speed limit, and you never go over. The right lane is your home, and you only get in the left lane if you need to turn left.  If you and another driver arrive at a stop sign at the same time, you always let the other driver go first.  So nice of you!  You're such a safe, kind driver.
+                    {% elif result == "demon" %}
+                    You consistently drive 30mph over the speed limit, and you like to tailgate and flash highbeams at people who decided today they are going to drive like a normal, sane person and they end up blocking your path.  You also like to cut people off, and you never use your turn signal.  You definitely drive an Altima or a BMW.
+                    {% elif result == "dui" %}
+                    Yeah you are always drinking or doing drugs or vaping.  A DUI is on the horizon for you, if you haven't gotten one already.  You addict...
+                    {% elif result == "beetledriver" %}
+                    You definitely a Beetle.  If it's not a beetle, its a Volkwagen or Chevy van with an interior conversion.  Your grandparents probabaly lived out in the woods of California or Colorado, too.
+                    {% else %}
+                    You drive a truck.  A lifted truck.  Like, a REALLY big truck. Like rock-climb-into-it-type truck.  You also have a confederate flag license plate and maybe truck nuts.  You like to drive really close to people in the left lane and tailgate people in the right lane.
+                    {% endif %}
+                </p>
+            </div>
+            <a class="submit" href="/popquiz">Return to Quiz</a>
+        </div>
     </body>
 </html>

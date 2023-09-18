@@ -42,20 +42,19 @@ def quiz_results(bread, animal, icecream):
 
 @app.route('/popquiz')
 def popquiz():
-    if request.method == 'GET':
-        if "quiz" in request.args:
-            num = int(request.args["quiz"])
-            if num == 1:
-                session["name"] = request.args["name"]
-                session["bread"] = request.args["bread"]
-            elif num == 2:
-                session["animal"] = request.args["animal"]
-            elif num == 3:
-                session["icecream"] = request.args["icecream"]           
-                result = quiz_results(session["bread"], session["animal"], session["icecream"])
-                return render_template('popquiz/results.html', name=session["name"], bread=session["bread"], animal=session["animal"], icecream=session["icecream"], result=result)
+    if request.method == 'GET' and "quiz" in request.args:
+        num = int(request.args["quiz"])
+        if num == 1:
+            session["name"] = request.args["name"]
+            session["bread"] = request.args["bread"]
+        elif num == 2:
+            session["animal"] = request.args["animal"]
+        elif num == 3:
+            session["icecream"] = request.args["icecream"]           
+            result = quiz_results(session["bread"], session["animal"], session["icecream"])
+            return render_template('popquiz/results.html', name=session["name"], bread=session["bread"], animal=session["animal"], icecream=session["icecream"], result=result)
 
-            return render_template(f'popquiz/form{num+1}.html')
+        return render_template(f'popquiz/form{num+1}.html')
     return render_template('popquiz/form1.html')
 
 if __name__ == '__main__':
