@@ -89,9 +89,8 @@ body {
     padding: 0;
     font-size: 18px;
 }
-.corner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: auto;
+.buttons {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
 }

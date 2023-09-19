@@ -11,19 +11,21 @@
     <form class="form">     
         <div class="question">
             <p>Name:</p>
-            <input type="text" name="name" class="textbox">
+            <input type="text" name="name" class="textbox" required>
         </div>
         <div class="question multi"> 
             <p>What is your favorite type of bread?</p>
-            <p><input type="radio" name="bread" value="white">White</p>
-            <p><input type="radio" name="bread" value="sourdough">Sourdough</p>
-            <p><input type="radio" name="bread" value="wholegrain">Whole Grain</p>
-            <p><input type="radio" name="bread" value="french">French</p>
+            <p><input type="radio" name="bread" value="white" required checked>White</p>
+            <p><input type="radio" name="bread" value="sourdough" required>Sourdough</p>
+            <p><input type="radio" name="bread" value="wholegrain" required>Whole Grain</p>
+            <p><input type="radio" name="bread" value="french" required>French</p>
             <input type="hidden" name="quiz" value="1">
         </div>
-        <input type="submit" class="submit">
+        <div class="buttons">
+            <input type="submit" class="submit">
+            <a class="submit home" href="/home">Home</a>
+        </div>
     </form>
-    <a class="submit corner" href="/home">Home</a>
     <script>
         const form = document.getElementById('quiz');
         form.addEventListener('keypress', function(e) {
