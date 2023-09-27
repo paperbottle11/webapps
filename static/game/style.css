@@ -1,0 +1,17 @@
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 100px);
+    grid-gap: 5px;
+}
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: lightgray;
+    border-radius: 10px;
+}
+.highlight {
+    width: 100px;
+    height: 100px;
+    background-color: gray;
+    border-radius: 10px;
+}

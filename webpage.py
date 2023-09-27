@@ -57,5 +57,9 @@ def popquiz():
         return render_template(f'popquiz/form{num+1}.html')
     return render_template('popquiz/form1.html')
 
+@app.route('/game')
+def game():
+    return send_from_directory(app.static_folder, path='game/index.html')
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
