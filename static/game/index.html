@@ -7,9 +7,15 @@
     <script src="/static/game/game.js"></script>
 </head>
 <body onload="setup();">
-    <div id="board">
-
+    <a id="home" href="/home">Home</a>
+    <div class="container">
+        <div class="bg">
+            <h1>Lights Out!</h1>
+            <h2 id="message"></h2>
+            <div id="board">
+            </div>
+            <button onclick="reset();" class="resetbutton">Reset Board</button>
+        </div>
     </div>
-    
 </body>
 </html>

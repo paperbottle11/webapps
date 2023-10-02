@@ -61,5 +61,14 @@ def popquiz():
 def game():
     return send_from_directory(app.static_folder, path='game/index.html')
 
+@app.route("/ajax")
+def ajaxdemo():
+    return send_from_directory(app.static_folder ,"AJAXdemo/demo.html")
+
+import random
+@app.route('/random')
+def rand():
+    return str(random.randint(0, 100))
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
