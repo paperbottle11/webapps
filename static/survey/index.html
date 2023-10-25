@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vote for your Favorite Animal</title>
+    <link rel="stylesheet" href="/static/survey/index.css">
+</head>
+<body>
+    <a id="home" href="/home">Home</a>
+    <form action="/vote" method="POST">
+        <label>Select your favorite cookie:</label>
+        <div class="buttons">
+            <select name="cookie">
+                <option value="chocolatechip">Chocolate Chip</option>
+                <option value="snickerdoodle">Snickerdoodle</option>
+                <option value="oatmealraisin">Oatmeal Raisin</option>
+                <option value="peanutbutter">Peanut Butter</option>
+            </select>
+            <input type="submit" value="Vote">
+        </div>
+    </form>
+    <script type="text/javascript">
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+</body>
+</html>

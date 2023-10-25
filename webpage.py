@@ -1,4 +1,7 @@
-from flask import Flask, send_from_directory, redirect, request, render_template, session
+from flask import Flask, send_from_directory, redirect, request, render_template, session, make_response, jsonify
+import firebase_admin
+from firebase_admin import credentials, firestore
+
 app = Flask(__name__)
 app.secret_key = "super secret key"
 
@@ -61,14 +64,47 @@ def popquiz():
 def game():
     return send_from_directory(app.static_folder, path='game/index.html')
 
-@app.route("/ajax")
-def ajaxdemo():
-    return send_from_directory(app.static_folder ,"AJAXdemo/demo.html")
+cred = credentials.Certificate("../creds.json")
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
-import random
-@app.route('/random')
-def rand():
-    return str(random.randint(0, 100))
+@app.route('/survey')
+def survey():
+    if request.cookies.get('vote_id'):
+        return redirect('/results')
+    return send_from_directory(app.static_folder, path='survey/index.html')
+
+@app.route('/vote', methods=['POST'])
+def vote():
+    cookie = request.form.get('cookie')
+    if cookie:
+        vote_ref = db.collection('votes').add({
+            'cookie': cookie,
+            'timestamp': firestore.SERVER_TIMESTAMP
+        })
+        print(vote_ref[-1].id)
+        resp = make_response(redirect('/results'))
+        resp.set_cookie('vote_id', vote_ref[-1].id)
+        return resp
+    return redirect('/survey')
+
+@app.route('/check/<doc_id>', methods=['GET'])
+def check_id(doc_id):
+    doc_ref = db.collection('votes').document(doc_id)
+    doc = doc_ref.get()
+    if doc.exists:
+        return jsonify({"exists": "yes"})
+    else:
+        return jsonify({"exists": "no"})
+
+@app.route('/results')
+def results():
+    votes = {}
+    docs = db.collection('votes').stream()
+    for doc in docs:
+        cookie = doc.to_dict().get('cookie')
+        votes[cookie] = votes.get(cookie, 0) + 1
+    return render_template('survey/results.html', votes=votes)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
