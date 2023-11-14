@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-do List</title>
+    <link rel="stylesheet" href="/static/todolist/style.css">
+    <script src="/static/todolist/script.js"></script>
+</head>
+<body>
+    <a id="home" href="/home">Home</a>
+    <h1>Your Tasks</h1>
+
+    <div class="add-container">
+        <input type="text" id="task_name"/><input type="button" value="Add" onclick="process();"/>
+    </div>
+
+    <div class="container">
+        <div class="list">
+            <h2>Not Completed</h2>
+            <ul id="not-completed-list"></ul>
+        </div>
+
+        <div class="list">
+            <h2>Completed</h2>
+            <ul id="completed-list"></ul>
+        </div>
+    </div>
+
+    
+
+    <script>
+        let task_box = document.getElementById("task_name");
+        task_box.addEventListener("keydown", function (e) {
+            if (e.code === "Enter") {  //checks whether the pressed key is "Enter"
+                process();
+            }
+        });
+        // TODO: make the add button not submit when empty box
+        // Using XMLHttpRequest for the AJAX request
+        update();
+    </script>
+
+</body>
+</html>
