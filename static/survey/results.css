@@ -16,6 +16,9 @@
     background-color: #555;
     color: white;
 }
+h2 {
+    margin-top: 20px;
+}
 body {
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;

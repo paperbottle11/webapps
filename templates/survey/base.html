@@ -1,0 +1,77 @@
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+	<style>
+		*
+		{
+			margin: 0px;
+		}
+		
+		.header
+		{
+			font-family: 'Ubuntu', sans-serif;
+			font-size: 14px;
+			display: flex;
+			justify-content: right;
+			background: #060606;
+			padding: 16px;
+			margin: 0px;
+		}
+		
+		.header a
+		{
+			color: yellow;
+		}
+		
+		.header img
+		{
+			height: 60px;
+			border-radius: 100px;
+			box-shadow: -1px 0px 15px 5px yellow;
+			margin-right: 15px;
+		}
+		
+		span
+		{
+			color: yellow;
+		}
+		
+		br
+		{
+			margin: 10px;
+		}
+		
+		.header div
+		{
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+	
+	
+	</style>
+
+	{% block head %}
+	{% endblock head %}
+	</head>
+	
+<body>
+	<div class="header">
+		{% if "given_name" in session %}
+			<img src="{{ session['picture'] }}" alt="{{ session['name'] }}" referrerpolicy="no-referrer"/>
+			<div>
+				<span>{{ session['name'] }}</span>
+				<a href="/logout">Logout</a>
+			</div>
+		{% else %}
+			<a href="/login">Login</a>
+		{% endif %}
+	</div>
+  {% block content %}
+    <h1>Welcome to my page!</h1>
+  {% endblock content %}
+	
+	
+</body>
+
+</html>

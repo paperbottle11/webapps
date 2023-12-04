@@ -1,6 +1,7 @@
-from flask import Flask, send_from_directory, redirect, request, render_template, session, make_response, jsonify
+from flask import Flask, send_from_directory, redirect, request, render_template, session, make_response, jsonify, abort
 import firebase_admin
 from firebase_admin import credentials, firestore
+from firebase_admin.firestore import FieldFilter
 
 app = Flask(__name__)
 app.secret_key = "super secret key"
@@ -77,16 +78,24 @@ db = firestore.client()
 #region Survey
 @app.route('/survey')
 def survey():
-    if request.cookies.get('vote_id'):
-        return redirect('/results')
     return send_from_directory(app.static_folder, path='survey/index.html')
 
 @app.route('/vote', methods=['POST'])
 def vote():
     cookie = request.form.get('cookie')
+    sub = session["sub"]
     if cookie:
+        if request.cookies.get('vote_id'):
+            doc_ref = db.collection('votes').document(request.cookies.get('vote_id'))
+            doc = doc_ref.get()
+            if doc.exists:
+                if doc.to_dict().get('sub') == sub:
+                    doc_ref.delete()
+
+        
         vote_ref = db.collection('votes').add({
             'cookie': cookie,
+            'sub': sub,
             'timestamp': firestore.SERVER_TIMESTAMP
         })
         print(vote_ref[-1].id)
@@ -111,7 +120,32 @@ def results():
     for doc in docs:
         cookie = doc.to_dict().get('cookie')
         votes[cookie] = votes.get(cookie, 0) + 1
-    return render_template('survey/results.html', votes=votes)
+
+    userVote = None
+    
+    
+    votes_ref = db.collection("votes")
+    query = votes_ref.where(filter=FieldFilter("sub", "==", session.get("sub")))
+    doc = query.stream()
+    doc = list(doc)
+    if len(doc) > 0:
+        doc = doc[0]
+    else:
+        doc = None
+    
+    if doc:
+        doc = doc.to_dict()
+        if doc.get("sub") == session.get("sub"):
+            userVote = doc.get('cookie')
+            if userVote == "chocolatechip":
+                userVote = "Chocolate Chip"
+            elif userVote == "snickerdoodle":
+                userVote = "Snickerdoodle"
+            elif userVote == "oatmealraisin":
+                userVote = "Oatmeal Raisin"
+            elif userVote == "peanutbutter":
+                userVote = "Peanut Butter"
+    return render_template('survey/results.html', votes=votes, vote=userVote, session=session)
 
 #endregion
 
@@ -129,7 +163,7 @@ def todolist():
         doc_dict["_id"]=doc.id
         output.append(doc_dict)
  
-    return output
+    return jsonify(output)
     
 @app.route('/toggle/<doc_id>')
 def toggle(doc_id):
@@ -160,6 +194,67 @@ def remove(doc_id):
     return ""
 
 #endregion
+
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+import google.auth.transport.requests
+from pip._vendor import cachecontrol
+import os
+import requests
+
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1" #REMOVE THIS WHEN YOU DEPLOY
+GOOGLE_CLIENT_ID = "814599710052-ltc00tda5lapj8kna16rpqm2r6vm7kbp.apps.googleusercontent.com"
+
+
+flow = Flow.from_client_secrets_file(  
+	client_secrets_file="oauth.json",
+	scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],  
+	redirect_uri="http://localhost:80/callback" #FIX THIS WHEN YOU DEPLOY
+)
+
+def login_is_required(function):  #a function to check if the user is authorized or not
+    def wrapper(*args, **kwargs):
+        if "sub" not in session:  #authorization required
+            return redirect("/")
+        else:
+            return function()
+
+    return wrapper
+
+@app.route("/login")  #the page where the user can login
+def login():
+    authorization_url, state = flow.authorization_url()  #asking the flow class for the authorization (login) url
+    session["state"] = state
+    return redirect(authorization_url)
+
+@app.route("/logout")  #the page where the user can login
+def logout():
+    session.clear()
+    return redirect("/results")
+
+@app.route("/callback")  #this is the page that will handle the callback process meaning process after the authorization
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  #state does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+    id_info = dict(id_info)
+    print(id_info["sub"])
+    session.update(id_info)
+    
+    
+    return redirect("/results")
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)

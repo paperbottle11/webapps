@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
+{% extends "survey/base.html" %}
+{% block head %}
     <title>Voting Results</title>
     <link rel="stylesheet" href="static/survey/results.css">
-</head>
-<body>
+{% endblock head %}
+{% block content %}
     <h2>Voting Results</h2>
     <ul>
         <li>Chocolate Chip: {% if votes["chocolatechip"] %} {{votes["chocolatechip"]}} {% else %} 0 {% endif%}</li>
@@ -13,8 +12,24 @@
         <li>Peanut Butter: {% if votes["peanutbutter"] %} {{votes["peanutbutter"]}} {% else %} 0 {% endif%}</li>
     </ul>
 
+    {% if vote and "given_name" in session %}
+        <h2>Your Vote</h2>
+        <ul>
+            <li>{{vote}}</li>
+        </ul>
+    {% endif %}
+
     <div id="piechart"></div>
+    
+    {% if "given_name" in session %}
+        <a id="home" href="/survey">Add/Modify Vote</a>
+    {% else %}
+        <h2>Not Logged In</h2>
+        <p>Please <a href="/login">log in</a> to add/modify vote.</p>
+    {% endif %}
+
     <a id="home" href="/home">Home</a>
+    
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
@@ -41,5 +56,4 @@
             chart.draw(data, options);
         }
     </script>
-</body>
-</html>
+{% endblock content %}
