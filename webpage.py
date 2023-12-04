@@ -76,7 +76,17 @@ firebase_admin.initialize_app(cred)
 db = firestore.client()
 
 #region Survey
+def login_is_required(function):  #a function to check if the user is authorized or not
+    def wrapper(*args, **kwargs):
+        if "sub" not in session:  #authorization required
+            return redirect("/")
+        else:
+            return function()
+
+    return wrapper
+
 @app.route('/survey')
+@login_is_required
 def survey():
     return send_from_directory(app.static_folder, path='survey/index.html')
 
@@ -85,13 +95,18 @@ def vote():
     cookie = request.form.get('cookie')
     sub = session["sub"]
     if cookie:
-        if request.cookies.get('vote_id'):
-            doc_ref = db.collection('votes').document(request.cookies.get('vote_id'))
-            doc = doc_ref.get()
-            if doc.exists:
-                if doc.to_dict().get('sub') == sub:
-                    doc_ref.delete()
+        votes_ref = db.collection("votes")
+        query = votes_ref.where(filter=FieldFilter("sub", "==", session.get("sub")))
+        doc = query.stream()
+        doc = list(doc)
+        if len(doc) > 0:
+            doc = doc[0]
+        else:
+            doc = None
 
+        if doc:
+            if doc.to_dict().get("sub") == session.get("sub"):
+                db.collection('votes').document(doc.id).delete()
         
         vote_ref = db.collection('votes').add({
             'cookie': cookie,
@@ -122,7 +137,6 @@ def results():
         votes[cookie] = votes.get(cookie, 0) + 1
 
     userVote = None
-    
     
     votes_ref = db.collection("votes")
     query = votes_ref.where(filter=FieldFilter("sub", "==", session.get("sub")))
@@ -211,15 +225,6 @@ flow = Flow.from_client_secrets_file(
 	scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],  
 	redirect_uri="http://localhost:80/callback" #FIX THIS WHEN YOU DEPLOY
 )
-
-def login_is_required(function):  #a function to check if the user is authorized or not
-    def wrapper(*args, **kwargs):
-        if "sub" not in session:  #authorization required
-            return redirect("/")
-        else:
-            return function()
-
-    return wrapper
 
 @app.route("/login")  #the page where the user can login
 def login():
