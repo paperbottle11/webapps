@@ -61,7 +61,7 @@
 			<img src="{{ session['picture'] }}" alt="{{ session['name'] }}" referrerpolicy="no-referrer"/>
 			<div>
 				<span>{{ session['name'] }}</span>
-				<a href="/logout">Logout</a>
+				<a href="/logout?page=results">Logout</a>
 			</div>
 		{% else %}
 			<a href="/login">Login</a>

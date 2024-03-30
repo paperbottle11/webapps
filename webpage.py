@@ -223,7 +223,7 @@ GOOGLE_CLIENT_ID = "814599710052-ltc00tda5lapj8kna16rpqm2r6vm7kbp.apps.googleuse
 flow = Flow.from_client_secrets_file(  
 	client_secrets_file="oauth.json",
 	scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email", "openid"],  
-	redirect_uri="http://localhost:80/callback" #FIX THIS WHEN YOU DEPLOY
+	redirect_uri="http://localhost:80/callback?page=results" #FIX THIS WHEN YOU DEPLOY
 )
 
 @app.route("/login")  #the page where the user can login
@@ -235,7 +235,9 @@ def login():
 @app.route("/logout")  #the page where the user can login
 def logout():
     session.clear()
-    return redirect("/results")
+    if "page" in request.args: page = request.args["page"]
+    else: page = "home"
+    return redirect(f"/{page}")
 
 @app.route("/callback")  #this is the page that will handle the callback process meaning process after the authorization
 def callback():
@@ -258,8 +260,14 @@ def callback():
     print(id_info["sub"])
     session.update(id_info)
     
-    
-    return redirect("/results")
+    if "page" in request.args: page = request.args["page"]
+    else: page = "home"
+    return redirect(f"/{page}")
+
+@app.route("/gifs")
+def gifs():
+    return send_from_directory(app.static_folder, "hshgifs/gifs.html")
 
 if __name__ == '__main__':
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(host="0.0.0.0", port=80)
